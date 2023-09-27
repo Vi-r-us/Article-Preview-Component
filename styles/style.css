@@ -1,0 +1,90 @@
+:root {
+  --clr-primary-400: hsl(217, 19%, 35%);
+  --clr-primary-300: hsl(214, 17%, 51%);
+  --clr-primary-200: hsl(212, 23%, 69%);
+  --clr-primary-100: hsl(210, 46%, 95%);
+
+  --ff-manrope: 'Manrope', sans-serif;
+  --fs-200: .8125rem;
+  --fw-medium: 500;
+  --fw-bold: 700;
+}
+
+/* General CSS */
+body {
+  min-height: 100vh;
+  background-color: var(--clr-primary-100);
+  color: var(--clr-primary-300);
+
+  font-family: var(--ff-manrope);
+  font-size: var(--fs-200);
+
+  display: grid;
+  place-content: center;
+  padding: 1.5em;
+}
+h1 {
+  color: var(--clr-primary-400);
+  font-size: 1rem;
+  font-weight: var(--fw-bold);
+}
+
+/* Utility Class */
+.grid {
+  display: grid;
+}
+.flex {
+  display: flex;
+  align-items: center;
+}
+
+/* Other CSS */
+.article {
+  border-radius: 1em;
+  overflow: hidden;
+  background-color: white;
+  position: relative;
+}
+
+.article__info {
+  flex-direction: column;
+  align-items: start;
+  gap: 1em;
+  padding: 2rem;
+}
+
+.article__author {
+  justify-content: start;
+  gap: 1.5em;
+  /* padding: 0rem 2rem 1.25rem 2rem; */
+}
+.author__img {
+  width: 2.5rem;
+  border-radius: 50%;
+}
+.author__name p:first-of-type {
+  color: var(--clr-primary-400);
+  font-weight: var(--fw-bold);
+}
+.author__name p:last-of-type {
+  color: var(--clr-primary-200);
+}
+
+.article__share {
+  width: 2.5em;
+  height: 2.5em;
+
+  background-color: var(--clr-primary-100);
+  justify-content: center;
+
+  margin-left: auto;
+  border-radius: 100vh;
+  cursor: pointer;
+
+  position: absolute;
+  bottom: 2.5em;
+  right: 2em;
+}
+
+.attribution { font-size: 11px; text-align: center; }
+.attribution a { color: hsl(228, 45%, 44%); text-decoration: none; }
