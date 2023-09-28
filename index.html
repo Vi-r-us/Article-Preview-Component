@@ -18,30 +18,51 @@
 </head>
 <body>
 
-  <article class="article">
-    <img class="article__img" src="images/drawers.jpg" alt="Article Drawers Image">
-    <div class="article__info flex">
-      <h1>Shift the overall look and feel by adding these wonderful 
-        touches to furniture in your home</h1>
-      <p>Ever been in a room and felt like something was missing? Perhaps 
-        it felt slightly bare and uninviting. I’ve got some simple tips 
-        to help you make any room feel complete.</p>
+  <article class="article grid">
+    <div class="article__img">
+      <img src="images/drawers.jpg" alt="Article Drawers Image">
+    </div>
 
-      <div class="article__author flex">
+    <div class="article__desc flex">
+      <div class="info flex">
+        <h1>Shift the overall look and feel by adding these wonderful
+          touches to furniture in your home</h1>
+        <p>Ever been in a room and felt like something was missing? Perhaps
+          it felt slightly bare and uninviting. I’ve got some simple tips
+          to help you make any room feel complete.</p>
+      </div>
+
+      <div class="author flex">
         <img class="author__img" src="images/avatar-michelle.jpg" alt="">
         <div class="author__name">
           <p>Michelle Appleton</p>
           <p>28 Jun 2020</p>
         </div>
+
+        <div class="share">
+          <!-- For checkbox modal -->
+    
+          <!-- label for styling -->
+          <label for="share__checkbox" class="share__btn flex" id="share__btn"></label>  
+          <!-- actual input [checkbox] -->
+          <input type="checkbox" id="share__checkbox">
+    
+          <!-- Modal -->
+          <div id="social__media__popup">
+            <div class="modal flex" id="modal">
+              <p>Share</p>
+              <a href="#"><div class="facebook"></div></a>
+              <a href="#"><div class="pinterest"></div></a>
+              <a href="#"><div class="twitter"></div></a>
+            </div>
+            <div class="triangle"></div>
+          </div>
+        </div>
       </div>
     </div>
       
 
-    <div class="article__share flex">
-      <img src="images/icon-share.svg" alt="">
-    </div>
   </article>
-  
   
   <div class="attribution"> 
     Coded by <a href="#" target="_blank">Sahil</a>.

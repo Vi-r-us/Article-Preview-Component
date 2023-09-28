@@ -5,12 +5,19 @@
   --clr-primary-100: hsl(210, 46%, 95%);
 
   --ff-manrope: 'Manrope', sans-serif;
-  --fs-200: .8125rem;
   --fw-medium: 500;
   --fw-bold: 700;
+
+  --fs-200: .8125rem;
+  --fs-400: 1rem;
+  @media (min-width: 32rem) {
+    --fs-400: 1.25rem;
+  }
 }
 
-/* General CSS */
+
+
+/* ------------------------ General CSS --------------------------- */
 body {
   min-height: 100vh;
   background-color: var(--clr-primary-100);
@@ -20,16 +27,20 @@ body {
   font-size: var(--fs-200);
 
   display: grid;
-  place-content: center;
+  place-content: center; 
   padding: 1.5em;
 }
 h1 {
   color: var(--clr-primary-400);
-  font-size: 1rem;
+  font-size: var(--fs-400);
   font-weight: var(--fw-bold);
 }
+input[type=checkbox] { display: none; }
 
-/* Utility Class */
+
+
+
+/* ------------------------- Utility Class ---------------------------  */
 .grid {
   display: grid;
 }
@@ -40,20 +51,38 @@ h1 {
 
 /* Other CSS */
 .article {
+  max-width: 45.625rem;
   border-radius: 1em;
   overflow: hidden;
   background-color: white;
   position: relative;
+  box-shadow: 0px 40px 40px -10px rgba(183, 199, 216, 0.3);
 }
 
-.article__info {
+.article__img {
+  height: 12.5rem;
+  overflow: hidden;
+}
+.article__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.article__desc {
+  position: relative;
   flex-direction: column;
   align-items: start;
+  gap: 2.5em;
+  padding: 2.5rem 2rem 1.5rem 2rem;
+}
+.info {
+  flex-direction: column;
   gap: 1em;
-  padding: 2rem;
 }
 
-.article__author {
+.author {
+  width: 100%;
   justify-content: start;
   gap: 1.5em;
   /* padding: 0rem 2rem 1.25rem 2rem; */
@@ -70,21 +99,144 @@ h1 {
   color: var(--clr-primary-200);
 }
 
-.article__share {
+.share {
+  margin-left: auto;
+  /* bottom: 1.75em;
+  right: 2em; */
+}
+
+.share__btn {
   width: 2.5em;
   height: 2.5em;
 
   background-color: var(--clr-primary-100);
-  justify-content: center;
-
-  margin-left: auto;
   border-radius: 100vh;
-  cursor: pointer;
 
+  cursor: pointer;
+  justify-content: center;
+  position: relative;
+  z-index: 100;
+}
+#share__checkbox {
+  z-index: 100;
+}
+
+.share__btn::before {
+  content: url(../images/icon-share.svg);
+  z-index: 100;
+}
+
+/* Modal */
+#social__media__popup {
+  /* for mobile */
   position: absolute;
-  bottom: 2.5em;
-  right: 2em;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: scale(0);
+}
+.modal {
+  background-color: var(--clr-primary-400);
+  gap: 1.25rem;
+  justify-content: start;
+  padding: 1.5rem 2rem;
+  /* padding: 1rem 1.5rem; */
+  /* border-radius: .625rem; */
+
+}
+.modal p {
+  font-weight: 500;
+  color: var(--clr-primary-100);
+  text-transform: uppercase;
+  font-size: var(--fs-200);
+  letter-spacing: 0.3125rem;
+}
+
+.facebook { background-image: url("../images/icon-facebook.svg"); }
+.twitter { background-image: url("../images/icon-twitter.svg"); }
+.pinterest { background-image: url("../images/icon-pinterest.svg"); }
+
+.facebook,
+.twitter,
+.pinterest {
+  cursor: pointer;
+  height: 1.2rem;
+  width: 1.2rem;
+  background-repeat: no-repeat;
+}
+
+.triangle {
+  width: 1.25rem;
+  height: 1.25rem;
+  background-color: var(--clr-primary-400);
+  margin-top: -12px;
+  transform: translate(101px, 0px) rotate(45deg);
+  /* for mobile view display should be none */
+  transform: scale(0);
+  display: none;
 }
 
 .attribution { font-size: 11px; text-align: center; }
 .attribution a { color: hsl(228, 45%, 44%); text-decoration: none; }
+
+
+
+/* -------------------- Transitions, Hover, Clicks and Animations ------------------- */
+.article,
+.article__img img,
+.share__btn,
+.facebook,
+.twitter,
+.pinterest {
+  transition: ease-out 0.3s;
+}
+
+.article:hover {
+  box-shadow: 0px 40px 40px -10px rgba(171, 194, 220, 0.5);
+}
+.article__img img:hover {
+  transform: scale(1.1);
+}
+
+/* Change color on hover of share button */
+.share__btn:hover,
+#body:has(#share__checkbox:checked) .share__btn {
+  background-color: var(--clr-primary-300);
+  &:before {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) 
+      saturate(0%) hue-rotate(83deg) brightness(106%) contrast(101%);
+  }
+}
+
+#share__checkbox:checked ~ #social__media__popup {
+  transform: scale(1);
+}
+
+
+/* Change color on socials button */
+.facebook:hover,
+.twitter:hover,
+.pinterest:hover {
+  filter: brightness(0) saturate(100%) invert(36%) sepia(34%) 
+    saturate(535%) hue-rotate(112deg) brightness(98%) contrast(94%);
+}
+
+
+
+/* -------------------------- Media Queries -------------------------- */
+@media (min-width: 31.5rem) {
+  .article { grid-template-columns: 1fr 1.6fr; }
+  .article__img {
+    height: 100%;
+    > img { object-position: left; }
+  }
+  
+  .article__desc { 
+    justify-content: space-between;
+    padding: 3em;
+    gap: 1.675rem;
+  }
+  
+}
+
+/* https://stackoverflow.com/questions/12851023/javascript-onclick-simulation-using-only-css-and-html-without-javascript */
