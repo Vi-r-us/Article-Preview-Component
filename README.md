@@ -1,4 +1,4 @@
-# NFT Preview Card Category
+# Article Preview Component
 
 I created an Article Preview Component featuring a modern UI design that adapts to various screen sizes. This project was developed as part of the [Frontend Mentor challenge](https://www.frontendmentor.io/challenges/article-preview-component-dYBN_pYFT). To ensure responsiveness, I utilized both flex and grid layouts combined with media queries. Additionally, I enhanced the loading experience with webkit animations and explored implementing the onClick functionality of a button without JavaScript, using labels and checkboxes.
 
