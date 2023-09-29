@@ -52,16 +52,23 @@ input[type=checkbox] { display: none; }
 /* Other CSS */
 .article {
   max-width: 45.625rem;
+
   border-radius: 1em;
   overflow: hidden;
   background-color: white;
   position: relative;
   box-shadow: 0px 40px 40px -10px rgba(183, 199, 216, 0.3);
+  grid-template-areas: 
+    'one'
+    'two';
 }
 
+/* -------------- First Sec -------------- */
 .article__img {
   height: 12.5rem;
   overflow: hidden;
+  z-index: 10;
+  grid-area: one;
 }
 .article__img img {
   width: 100%;
@@ -69,12 +76,16 @@ input[type=checkbox] { display: none; }
   object-fit: cover;
 }
 
+/* -------------- Second Sec -------------- */
 .article__desc {
   position: relative;
   flex-direction: column;
   align-items: start;
   gap: 2.5em;
   padding: 2.5rem 2rem 1.5rem 2rem;
+  /* first time opening animations */
+  animation: card-slide-down 1s ease-in-out;
+  grid-area: two;
 }
 .info {
   flex-direction: column;
@@ -115,34 +126,29 @@ input[type=checkbox] { display: none; }
   cursor: pointer;
   justify-content: center;
   position: relative;
-  z-index: 100;
+  z-index: 5;
 }
-#share__checkbox {
-  z-index: 100;
-}
-
 .share__btn::before {
   content: url(../images/icon-share.svg);
-  z-index: 100;
+  z-index: 5;
 }
+
 
 /* Modal */
 #social__media__popup {
   /* for mobile */
   position: absolute;
-  bottom: 0;
+  bottom: -100%;
   left: 0;
   right: 0;
-  transform: scale(0);
+  opacity: 0;
 }
 .modal {
   background-color: var(--clr-primary-400);
   gap: 1.25rem;
   justify-content: start;
+  flex-wrap: wrap;
   padding: 1.5rem 2rem;
-  /* padding: 1rem 1.5rem; */
-  /* border-radius: .625rem; */
-
 }
 .modal p {
   font-weight: 500;
@@ -162,18 +168,8 @@ input[type=checkbox] { display: none; }
   cursor: pointer;
   height: 1.2rem;
   width: 1.2rem;
+  background-size: 100%;
   background-repeat: no-repeat;
-}
-
-.triangle {
-  width: 1.25rem;
-  height: 1.25rem;
-  background-color: var(--clr-primary-400);
-  margin-top: -12px;
-  transform: translate(101px, 0px) rotate(45deg);
-  /* for mobile view display should be none */
-  transform: scale(0);
-  display: none;
 }
 
 .attribution { font-size: 11px; text-align: center; }
@@ -181,14 +177,18 @@ input[type=checkbox] { display: none; }
 
 
 
-/* -------------------- Transitions, Hover, Clicks and Animations ------------------- */
+/* -------------------- Transitions, Hover, Clicks ------------------- */
 .article,
 .article__img img,
 .share__btn,
 .facebook,
 .twitter,
-.pinterest {
+.pinterest,
+.triangle {
   transition: ease-out 0.3s;
+}
+#social__media__popup {
+  transition: ease-in-out 0.5s;
 }
 
 .article:hover {
@@ -200,16 +200,19 @@ input[type=checkbox] { display: none; }
 
 /* Change color on hover of share button */
 .share__btn:hover,
-#body:has(#share__checkbox:checked) .share__btn {
+#share__checkbox:checked ~ .share__btn {
   background-color: var(--clr-primary-300);
   &:before {
     filter: brightness(0) saturate(100%) invert(100%) sepia(0%) 
       saturate(0%) hue-rotate(83deg) brightness(106%) contrast(101%);
   }
 }
-
 #share__checkbox:checked ~ #social__media__popup {
-  transform: scale(1);
+  bottom: 0;
+  opacity: 1;
+}
+#share__checkbox:checked + #share__btn {
+  margin-bottom: -1rem;
 }
 
 
@@ -225,8 +228,14 @@ input[type=checkbox] { display: none; }
 
 /* -------------------------- Media Queries -------------------------- */
 @media (min-width: 31.5rem) {
-  .article { grid-template-columns: 1fr 1.6fr; }
+  .article { 
+    grid-template-areas: 'one two';
+    grid-template-columns: 1fr 1.6fr;
+    overflow: visible;
+    animation: card-anim 1s ease-in-out;
+  }
   .article__img {
+    border-radius: 1em 0 0 1em;
     height: 100%;
     > img { object-position: left; }
   }
@@ -235,8 +244,79 @@ input[type=checkbox] { display: none; }
     justify-content: space-between;
     padding: 3em;
     gap: 1.675rem;
+    animation: none;
+    /* animation: card-slide-right 1s ease-in-out; */
+  }
+  
+  #social__media__popup {
+    position: absolute;
+    bottom: 30%;
+    right: 5%;
+    left: initial;
+    transform: scale(0);
+    filter: drop-shadow(0px 4px 4px rgba(36, 36, 86, 0.25));
+    transition: 0.3s ease-out;
+  }
+
+  .modal {
+    justify-content: center;
+    padding: 1rem 1.5rem;
+    border-radius: .625rem;
+  }
+  .triangle {
+    width: 1.25rem;
+    height: 1.25rem;
+    background-color: var(--clr-primary-400);
+    margin-top: -12px;
+    transform: translate(187px, 0px) rotate(45deg);
+    /* for mobile view display should be none */
+    display: block;
+  }
+
+  #share__checkbox:checked ~ #social__media__popup {
+    transform: scale(1);
+    bottom: 30%;
+  }
+  #share__checkbox:checked + #share__btn {
+    margin-bottom: auto;
   }
   
 }
 
+@media (min-width: 53.75rem) {
+  #social__media__popup {
+    right: -14%;
+  }
+  #share__checkbox:checked ~ #social__media__popup {
+    transform: scale(1);
+  }
+
+  .triangle {
+    transform: translate(103px, 0px) rotate(45deg);
+  }
+}
+
+/* -------------------------- Transitions -------------------------- */
+@keyframes card-slide-down {
+  from {
+    max-height: 0;
+    padding: 0rem 2rem;
+    bottom: 100%;
+  }
+  to {
+    max-height: auto;
+    bottom: 0;
+  }
+}
+
+@keyframes card-anim {
+  from {
+    transform: scaleX(0);
+  }
+  to  {
+    transform: scaleX(1);
+  }
+}
+
 /* https://stackoverflow.com/questions/12851023/javascript-onclick-simulation-using-only-css-and-html-without-javascript */
+/* https://stackoverflow.com/questions/4502633/how-to-affect-other-elements-when-one-element-is-hovered */
